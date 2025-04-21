@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 import pandas as pd
 import sqlite3
 import datetime
@@ -120,8 +121,9 @@ def delete_file(file_id):
 
 # --- Streamlit App ---
 init_db()
-
-st.title("Dashboard Mapping Project")
+st.image("cistech.png", width=350)
+   
+st.title("Dashboard Mapping Project TSCM")
 
 tabs = st.tabs(["View Projects", "Add Project", "Edit Project", "Delete Project", "Manage Files"])
 
