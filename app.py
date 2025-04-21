@@ -221,7 +221,7 @@ with tabs[3]:
 # Fungsi cek password
 def check_password():
     def password_entered():
-        if st.session_state["password"] == st.secrets["warnabiru2025"]:
+        if st.session_state["password"] == st.secrets["password"]:
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # Jangan simpan password di session state
         else:
