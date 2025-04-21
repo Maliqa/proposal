@@ -218,27 +218,37 @@ with tabs[3]:
             delete_project(delete_selected_option)
 
 
-# Fungsi cek password
+
 def check_password():
     def password_entered():
         if st.session_state["password"] == st.secrets["password"]:
             st.session_state["password_correct"] = True
-            del st.session_state["password"]  # Jangan simpan password di session state
+            del st.session_state["password"]
         else:
             st.session_state["password_correct"] = False
 
     if "password_correct" not in st.session_state:
-        # Pertama kali jalankan: tampilkan input password
+        # Tampilkan input password pertama kali
         st.text_input("Password", type="password", on_change=password_entered, key="password")
         return False
-    elif not st.session_state["password_correct"]:
-        # Password salah: tampilkan input + error message
+    elif not st.session_state.get("password_correct", False):
+        # Password salah, tampilkan error dan input ulang
         st.text_input("Password", type="password", on_change=password_entered, key="password")
         st.error("Password incorrect")
         return False
     else:
-        # Password benar: lanjut ke konten utama
+        # Password benar, lanjut ke konten aplikasi protected Anda.
         return True
+
+
+# Contoh penggunaan:
+if check_password():
+    # Konten aplikasi yang dilindungi password muncul di sini.
+    st.write("We Are Family.")
+else:
+    # Jika belum login atau salah password,
+    # hanya form input dan pesan error yang muncul.
+    pass 
 
 
 if st.button("Manage Files"):
