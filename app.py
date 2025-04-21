@@ -217,12 +217,11 @@ with tabs[3]:
         if st.button("Delete Selected Project"):
             delete_project(delete_selected_option)
 
-import streamlit as st
 
 # Fungsi cek password
 def check_password():
     def password_entered():
-        if st.session_state["password"] == st.secrets["password"]:
+        if st.session_state["password"] == st.secrets["warnabiru2025"]:
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # Jangan simpan password di session state
         else:
