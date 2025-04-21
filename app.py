@@ -123,9 +123,7 @@ def delete_file(file_id):
 init_db()
 st.image("cistech.png", width=350)
 st.set_page_config(
-    page_title="CISTECH",
-    page_icon="assets/favicon.ico"
-)
+page_title="CISTECH")
 st.title("Dashboard Mapping Project TSCM")
 
 tabs = st.tabs(["View Projects", "Add Project", "Edit Project", "Delete Project", "Manage Files"])
