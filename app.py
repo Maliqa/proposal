@@ -124,9 +124,9 @@ def delete_file(file_id):
 
 # --- Streamlit App ---
 init_db()
-st.image("cistech.png", width=350)
+st.image("cistech.png", width=450)
 
-st.title("Dashboard Mapping Project TSCM 2025")
+st.title("Dashboard Mapping Project TSCM")
 
 tabs = st.tabs(["View Projects", "Add Project", "Edit Project", "Delete Project", "Manage Files"])
 
