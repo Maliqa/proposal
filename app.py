@@ -5,6 +5,9 @@ import sqlite3
 import datetime
 import os
 
+
+st.set_page_config(page_title="CISTECH", page_icon="assets/favicon.ico")
+
 # --- Database Functions ---
 def init_db():
     with sqlite3.connect('project_mapping.db') as conn:
@@ -122,8 +125,7 @@ def delete_file(file_id):
 # --- Streamlit App ---
 init_db()
 st.image("cistech.png", width=350)
-st.set_page_config(
-page_title="CISTECH")
+
 st.title("Dashboard Mapping Project TSCM")
 
 tabs = st.tabs(["View Projects", "Add Project", "Edit Project", "Delete Project", "Manage Files"])
