@@ -126,7 +126,7 @@ def delete_file(file_id):
 init_db()
 st.image("cistech.png", width=350)
 
-st.title("Dashboard Mapping Project TSCM")
+st.title("Dashboard Mapping Project TSCM 2025")
 
 tabs = st.tabs(["View Projects", "Add Project", "Edit Project", "Delete Project", "Manage Files"])
 
