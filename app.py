@@ -217,28 +217,55 @@ with tabs[3]:
         if st.button("Delete Selected Project"):
             delete_project(delete_selected_option)
 
-with tabs[4]:
-    st.subheader("Manage Files for Each Project")
-    df_projects = get_all_projects()
-    if not df_projects.empty:
-        selected_project = st.selectbox(
-            "Choose a Project to Manage Files",
-            df_projects['id'].tolist(),
-            format_func=lambda x: df_projects[df_projects['id'] == x]['project_name'].iloc[0]
-        )
-        uploaded_file = st.file_uploader("Upload New File Here", type=['pdf', 'docx', 'png', 'jpg', 'jpeg'])
-        if st.button("Upload New File"):
-            upload_file(selected_project, uploaded_file)
+import streamlit as st
 
-        files_df = get_all_project_files(selected_project)
-        for index, row in files_df.iterrows():
-            col1, col2, col3 = st.columns([6, 2, 1])
-            col1.write(row['file_name'])
-            col2.download_button(
-                label="Download",
-                data=open(row['file_path'], 'rb').read(),
-                file_name=row['file_name'],
-                mime='application/octet-stream',
-                key=f'download-{row.id}'
-            )
-            col3.button(label="Delete", key=row.id, on_click=delete_file, args=(row.id,))
+# Fungsi cek password
+def check_password():
+    def password_entered():
+        if st.session_state["password"] == st.secrets["password"]:
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Jangan simpan password di session state
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        # Pertama kali jalankan: tampilkan input password
+        st.text_input("Password", type="password", on_change=password_entered, key="password")
+        return False
+    elif not st.session_state["password_correct"]:
+        # Password salah: tampilkan input + error message
+        st.text_input("Password", type="password", on_change=password_entered, key="password")
+        st.error("Password incorrect")
+        return False
+    else:
+        # Password benar: lanjut ke konten utama
+        return True
+
+
+if st.button("Manage Files"):
+    if check_password():
+        with tabs[4]:
+            st.subheader("Manage Files for Each Project")
+            df_projects = get_all_projects()
+            if not df_projects.empty:
+                selected_project = st.selectbox(
+                    "Choose a Project to Manage Files",
+                    df_projects['id'].tolist(),
+                    format_func=lambda x: df_projects[df_projects['id'] == x]['project_name'].iloc[0]
+                )
+                uploaded_file = st.file_uploader("Upload New File Here", type=['pdf', 'docx', 'png', 'jpg', 'jpeg'])
+                if st.button("Upload New File"):
+                    upload_file(selected_project, uploaded_file)
+
+                files_df = get_all_project_files(selected_project)
+                for index, row in files_df.iterrows():
+                    col1, col2, col3 = st.columns([6, 2, 1])
+                    col1.write(row['file_name'])
+                    col2.download_button(
+                        label="Download",
+                        data=open(row['file_path'], 'rb').read(),
+                        file_name=row['file_name'],
+                        mime='application/octet-stream',
+                        key=f'download-{row.id}'
+                    )
+                    col3.button(label="Delete", key=row.id, on_click=delete_file, args=(row.id,))
